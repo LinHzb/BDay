@@ -15,8 +15,18 @@
         overflow: hidden;
     }
 
-    #btn {
-        margin-top: 20vh;
+    /* container dos botões iniciais */
+    #start {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .start-btn {
         padding: 20px 40px;
         background: #ff0066;
         border: none;
@@ -39,7 +49,6 @@
         z-index: 5;
     }
 
-    /* Título responsivo */
     #titulo {
         color: #ff4dfc;
         font-size: min(36px, 6vw);
@@ -50,7 +59,6 @@
         padding: 0 10px;
     }
 
-    /* Pixelart responsiva */
     #art {
         width: min(60vh, 80vw);
         image-rendering: pixelated;
@@ -59,7 +67,6 @@
         transition: opacity 1s ease-in-out;
     }
 
-    /* PARABÉNS subindo */
     .parabens {
         position: absolute;
         color: #ff66ff;
@@ -85,9 +92,11 @@
 
 <body>
 
-<button id="btn">CLIQUE AQUI 🎉</button>
+<div id="start">
+    <button id="btn" class="start-btn">CLIQUE AQUI 🎉</button>
+    <button id="btnVideo" class="start-btn">OU 👀</button>
+</div>
 
-<!-- Música -->
 <audio id="music" src="lofi.mp3" loop></audio>
 
 <div id="scene">
@@ -99,6 +108,8 @@
 
 <script>
 const btn = document.getElementById("btn");
+const btnVideo = document.getElementById("btnVideo");
+const start = document.getElementById("start");
 const scene = document.getElementById("scene");
 const art = document.getElementById("art");
 const titulo = document.getElementById("titulo");
@@ -114,12 +125,11 @@ window.onresize = () => {
     canvas.height = innerHeight;
 };
 
-// Botão
+// Ação do botão principal
 btn.onclick = () => {
-    btn.style.display = "none";
+    start.style.display = "none";
     scene.style.display = "flex";
 
-    // Música com fade-in
     const music = document.getElementById("music");
     music.volume = 0;
     music.play();
@@ -131,12 +141,16 @@ btn.onclick = () => {
         if (v >= 0.6) clearInterval(fade);
     }, 100);
 
-    // Fade título + imagem
     setTimeout(() => { titulo.style.opacity = 1; }, 200);
     setTimeout(() => { art.style.opacity = 1; }, 500);
 
     setInterval(spawnParabens, 300);
     animateFireworks();
+};
+
+// Botão para abrir página do vídeo
+btnVideo.onclick = () => {
+    window.open("video.html", "_blank");
 };
 
 // Texto subindo
